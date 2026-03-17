@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paradis Voyages — Trouve ton coin de paradis</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ocean: #0BA4C2;
+    --turquoise: #40D9C8;
+    --deep: #086B80;
+    --sand: #F5ECD7;
+    --beige: #EAD9B8;
+    --white: #FDFAF5;
+    --dark: #0D2B33;
+    --gold: #C9A84C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--white);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 4rem;
+    background: transparent;
+    transition: background 0.4s, backdrop-filter 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(8,107,128,0.85);
+    backdrop-filter: blur(12px);
+  }
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 300; letter-spacing: 0.08em;
+    color: var(--white);
+  }
+  .logo span { color: var(--turquoise); font-style: italic; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.85); text-decoration: none;
+    font-size: 0.8rem; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--turquoise); }
+  .nav-cta {
+    border: 1px solid rgba(255,255,255,0.5); color: var(--white);
+    padding: 0.6rem 1.5rem; font-size: 0.75rem; letter-spacing: 0.12em;
+    text-transform: uppercase; cursor: pointer; background: transparent;
+    transition: all 0.3s; font-family: 'Jost', sans-serif; font-weight: 300;
+  }
+  .nav-cta:hover { background: var(--turquoise); border-color: var(--turquoise); color: var(--dark); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; height: 100vh; min-height: 700px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: 
+      linear-gradient(180deg, rgba(8,107,128,0.3) 0%, rgba(11,164,194,0.15) 40%, rgba(0,0,0,0.4) 100%),
+      url('https://images.unsplash.com/photo-1548574505-5e239809ee19?w=1800&q=80') center/cover no-repeat;
+    transform: scale(1.05);
+    animation: slowZoom 20s ease-in-out infinite alternate;
+  }
+  @keyframes slowZoom {
+    from { transform: scale(1.05); }
+    to { transform: scale(1.12); }
+  }
+  .hero-content {
+    position: relative; text-align: center; color: var(--white);
+    padding: 0 2rem; max-width: 900px;
+    animation: fadeUp 1.2s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--turquoise); margin-bottom: 1.5rem; font-weight: 300;
+    animation: fadeUp 1.2s 0.2s ease both;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 300; line-height: 1.1;
+    margin-bottom: 0.3rem;
+    animation: fadeUp 1.2s 0.3s ease both;
+  }
+  .hero h1 em { font-style: italic; color: var(--turquoise); }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    font-weight: 300; font-style: italic;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 2.5rem;
+    animation: fadeUp 1.2s 0.4s ease both;
+  }
+  .hero-desc {
+    font-size: 0.9rem; font-weight: 300; letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.75); max-width: 500px; margin: 0 auto 3rem;
+    line-height: 1.8;
+    animation: fadeUp 1.2s 0.5s ease both;
+  }
+  .hero-btns {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 1.2s 0.6s ease both;
+  }
+  .btn-primary {
+    background: var(--turquoise); color: var(--dark);
+    border: none; padding: 1rem 2.5rem;
+    font-family: 'Jost', sans-serif; font-size: 0.8rem;
+    font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .btn-primary:hover { background: var(--ocean); color: var(--white); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    border: 1px solid rgba(255,255,255,0.5); padding: 1rem 2.5rem;
+    font-family: 'Jost', sans-serif; font-size: 0.8rem;
+    font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .btn-outline:hover { border-color: var(--turquoise); color: var(--turquoise); }
+
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: rgba(255,255,255,0.6); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    animation: fadeUp 1.2s 1s ease both;
+  }
+  .scroll-line {
+    width: 1px; height: 50px; background: rgba(255,255,255,0.4);
+    animation: scrollDown 2s ease-in-out infinite;
+  }
+  @keyframes scrollDown {
+    0%, 100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.5); opacity: 0.3; }
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--dark);
+    display: flex; justify-content: center; gap: 0;
+  }
+  .stat-item {
+    padding: 2rem 3.5rem; text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 300; color: var(--turquoise);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); font-weight: 300;
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 7rem 4rem; }
+  .section-tag {
+    font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--ocean); margin-bottom: 1rem; font-weight: 400;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 300;
+    line-height: 1.2; margin-bottom: 1.5rem; color: var(--dark);
+  }
+  .section-title em { font-style: italic; color: var(--ocean); }
+  .section-desc {
+    font-size: 0.95rem; font-weight: 300; line-height: 1.9;
+    color: #4a6670; max-width: 550px;
+  }
+
+  /* ── DESTINATIONS ── */
+  .destinations { background: var(--white); }
+  .dest-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem;
+  }
+  .dest-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+  }
+  .dest-card {
+    position: relative; overflow: hidden; cursor: pointer;
+    border-radius: 2px;
+  }
+  .dest-card:first-child {
+    grid-column: 1 / 2; grid-row: 1 / 3;
+  }
+  .dest-card img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.7s ease;
+    display: block;
+    min-height: 250px;
+  }
+  .dest-card:first-child img { min-height: 520px; }
+  .dest-card:hover img { transform: scale(1.08); }
+  .dest-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(0deg, rgba(8,43,51,0.85) 0%, rgba(0,0,0,0.1) 60%);
+    transition: opacity 0.3s;
+  }
+  .dest-card:hover .dest-overlay { opacity: 0.7; }
+  .dest-info {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 1.8rem;
+  }
+  .dest-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 400; color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+  .dest-tag {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--turquoise); font-weight: 300;
+  }
+  .dest-price {
+    position: absolute; top: 1.2rem; right: 1.2rem;
+    background: rgba(8,107,128,0.9); backdrop-filter: blur(8px);
+    color: var(--white); padding: 0.4rem 0.9rem;
+    font-size: 0.75rem; font-weight: 300; letter-spacing: 0.05em;
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience {
+    background: linear-gradient(135deg, var(--dark) 0%, #0a3a47 100%);
+    color: var(--white);
+    position: relative; overflow: hidden;
+  }
+  .experience::before {
+    content: '';
+    position: absolute; top: -50%; right: -20%;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(11,164,194,0.15) 0%, transparent 70%);
+  }
+  .exp-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+    align-items: center; position: relative;
+  }
+  .exp-visual {
+    position: relative;
+  }
+  .exp-img-main {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover;
+    border-radius: 2px;
+  }
+  .exp-img-accent {
+    position: absolute; bottom: -2rem; right: -2rem;
+    width: 55%; aspect-ratio: 4/3; object-fit: cover;
+    border-radius: 2px;
+    border: 4px solid var(--dark);
+  }
+  .exp-badge {
+    position: absolute; top: 2rem; left: -1.5rem;
+    background: var(--turquoise); color: var(--dark);
+    padding: 1.2rem 1.5rem; text-align: center;
+  }
+  .exp-badge-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 300; display: block; line-height: 1;
+  }
+  .exp-badge-text {
+    font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 400;
+  }
+  .exp-content .section-title { color: var(--white); }
+  .exp-content .section-desc { color: rgba(255,255,255,0.65); }
+  .exp-features {
+    margin-top: 3rem; display: flex; flex-direction: column; gap: 1.5rem;
+  }
+  .exp-feature {
+    display: flex; gap: 1.2rem; align-items: flex-start;
+  }
+  .exp-feature-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    border: 1px solid rgba(64,217,200,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; color: var(--turquoise);
+  }
+  .exp-feature-title {
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em;
+    color: var(--white); margin-bottom: 0.3rem;
+  }
+  .exp-feature-desc {
+    font-size: 0.8rem; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.7;
+  }
+
+  /* ── DESTINATIONS FEATURED ── */
+  .islands {
+    background: var(--sand);
+  }
+  .islands-intro {
+    text-align: center; max-width: 600px; margin: 0 auto 5rem;
+  }
+  .islands-intro .section-desc { margin: 0 auto; text-align: center; }
+  .islands-strip {
+    display: flex; gap: 1.5rem; overflow-x: auto;
+    padding-bottom: 1rem; scroll-snap-type: x mandatory;
+  }
+  .islands-strip::-webkit-scrollbar { height: 2px; }
+  .islands-strip::-webkit-scrollbar-track { background: var(--beige); }
+  .islands-strip::-webkit-scrollbar-thumb { background: var(--ocean); }
+  .island-card {
+    min-width: 320px; scroll-snap-align: start;
+    background: var(--white); border-radius: 2px; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .island-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(8,107,128,0.15); }
+  .island-img { width: 100%; height: 220px; object-fit: cover; }
+  .island-body { padding: 1.8rem; }
+  .island-flag { font-size: 1.5rem; margin-bottom: 0.8rem; }
+  .island-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 400; margin-bottom: 0.5rem; color: var(--dark);
+  }
+  .island-desc {
+    font-size: 0.82rem; color: #6a8090; line-height: 1.7; font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+  .island-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 1rem; border-top: 1px solid var(--beige);
+  }
+  .island-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; color: var(--ocean); font-weight: 300;
+  }
+  .island-price span { font-size: 0.7rem; color: #8a9fa8; font-family: 'Jost', sans-serif; }
+  .island-btn {
+    background: none; border: 1px solid var(--ocean); color: var(--ocean);
+    padding: 0.5rem 1.2rem; font-size: 0.7rem; letter-spacing: 0.1em;
+    text-transform: uppercase; cursor: pointer; transition: all 0.3s;
+    font-family: 'Jost', sans-serif;
+  }
+  .island-btn:hover { background: var(--ocean); color: var(--white); }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { background: var(--white); text-align: center; }
+  .test-intro { max-width: 500px; margin: 0 auto 4rem; }
+  .test-intro .section-desc { margin: 0 auto; }
+  .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .test-card {
+    background: var(--sand); padding: 2.5rem 2rem;
+    border-bottom: 3px solid transparent; transition: border-color 0.3s;
+    text-align: left;
+  }
+  .test-card:hover { border-bottom-color: var(--turquoise); }
+  .test-stars { color: var(--gold); font-size: 0.8rem; margin-bottom: 1rem; letter-spacing: 0.1em; }
+  .test-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-style: italic; line-height: 1.7;
+    color: var(--dark); margin-bottom: 1.5rem;
+  }
+  .test-author { display: flex; align-items: center; gap: 0.8rem; }
+  .test-avatar {
+    width: 42px; height: 42px; border-radius: 50%; object-fit: cover;
+  }
+  .test-name { font-size: 0.82rem; font-weight: 500; color: var(--dark); }
+  .test-dest { font-size: 0.72rem; color: var(--ocean); letter-spacing: 0.08em; }
+
+  /* ── CTA ── */
+  .cta-section {
+    position: relative; overflow: hidden;
+    background: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1400&q=80') center/cover;
+    text-align: center; padding: 10rem 4rem;
+  }
+  .cta-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(8,107,128,0.88), rgba(8,43,51,0.92));
+  }
+  .cta-content { position: relative; max-width: 700px; margin: 0 auto; }
+  .cta-content .section-tag { color: var(--turquoise); }
+  .cta-content .section-title { color: var(--white); margin: 0 auto 1.5rem; }
+  .cta-content .section-desc { color: rgba(255,255,255,0.7); margin: 0 auto 3rem; text-align: center; }
+  .cta-form {
+    display: flex; gap: 0; max-width: 480px; margin: 0 auto;
+  }
+  .cta-input {
+    flex: 1; padding: 1rem 1.5rem; border: none; background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px); color: var(--white); font-family: 'Jost', sans-serif;
+    font-size: 0.85rem; outline: none;
+  }
+  .cta-input::placeholder { color: rgba(255,255,255,0.5); }
+  .cta-submit {
+    background: var(--turquoise); color: var(--dark); border: none;
+    padding: 1rem 1.8rem; font-family: 'Jost', sans-serif; font-size: 0.75rem;
+    font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.3s;
+    white-space: nowrap;
+  }
+  .cta-submit:hover { background: var(--white); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,0.6);
+    padding: 5rem 4rem 2rem;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem; margin-bottom: 4rem;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 300; color: var(--white); margin-bottom: 1rem;
+  }
+  .footer-logo span { color: var(--turquoise); font-style: italic; }
+  .footer-about { font-size: 0.82rem; line-height: 1.8; font-weight: 300; }
+  .footer-col h4 {
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--white); margin-bottom: 1.5rem; font-weight: 400;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-col a {
+    color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.82rem;
+    font-weight: 300; transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--turquoise); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 2rem; display: flex; justify-content: space-between;
+    font-size: 0.75rem; font-weight: 300;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 2rem; }
+    .nav-links { display: none; }
+    section { padding: 5rem 2rem; }
+    .dest-grid { grid-template-columns: 1fr 1fr; }
+    .dest-card:first-child { grid-column: 1 / 3; grid-row: auto; }
+    .exp-grid { grid-template-columns: 1fr; }
+    .exp-visual { display: none; }
+    .test-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .stats-bar { flex-wrap: wrap; }
+    .stat-item { flex: 1; min-width: 120px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="logo">Paradis<span>Voyages</span></div>
+  <ul class="nav-links">
+    <li><a href="#destinations">Destinations</a></li>
+    <li><a href="#experience">Notre approche</a></li>
+    <li><a href="#iles">Îles paradisiaques</a></li>
+    <li><a href="#temoignages">Avis</a></li>
+  </ul>
+  <button class="nav-cta">Planifier mon voyage</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">✦ Agence de voyages de luxe ✦</p>
+    <h1>Trouve ton <em>petit coin</em><br>de paradis</h1>
+    <p class="hero-sub">L'océan t'attend. Et si tu y allais ?</p>
+    <p class="hero-desc">Des eaux turquoise cristallines, du sable blanc immaculé, des horizons infinis. Nous créons pour vous des voyages sur mesure vers les plus belles îles du monde.</p>
+    <div class="hero-btns">
+      <button class="btn-primary">Découvrir nos destinations</button>
+      <button class="btn-outline">Voyage sur mesure</button>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Découvrir</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-num">48+</span>
+    <span class="stat-label">Destinations insulaires</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">2400+</span>
+    <span class="stat-label">Voyageurs satisfaits</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">12</span>
+    <span class="stat-label">Années d'expertise</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">4.9★</span>
+    <span class="stat-label">Note moyenne</span>
+  </div>
+</div>
+
+<!-- DESTINATIONS -->
+<section class="destinations" id="destinations">
+  <div class="dest-header">
+    <div>
+      <p class="section-tag">✦ Nos sélections</p>
+      <h2 class="section-title">Destinations <em>coup de cœur</em></h2>
+    </div>
+    <p class="section-desc">Des paysages qui semblent irréels, des eaux qui brillent sous le soleil tropical. Voici nos destinations les plus envoûtantes.</p>
+  </div>
+  <div class="dest-grid">
+    <div class="dest-card">
+      <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=600&q=80" alt="Maldives">
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-name">Maldives</div>
+        <div class="dest-tag">Océan Indien ✦ Villas sur pilotis</div>
+      </div>
+      <div class="dest-price">À partir de 2 890 €</div>
+    </div>
+    <div class="dest-card">
+      <img src="https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=600&q=80" alt="Bora Bora">
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-name">Bora Bora</div>
+        <div class="dest-tag">Polynésie ✦ Lagons légendaires</div>
+      </div>
+      <div class="dest-price">À partir de 3 490 €</div>
+    </div>
+    <div class="dest-card">
+      <img src="https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?w=600&q=80" alt="Seychelles">
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-name">Seychelles</div>
+        <div class="dest-tag">Afrique ✦ Rochers granitiques</div>
+      </div>
+      <div class="dest-price">À partir de 2 190 €</div>
+    </div>
+    <div class="dest-card">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80" alt="Thaïlande">
+      <div class="dest-overlay"></div>
+      <div class="dest-info">
+        <div class="dest-name">Koh Samui</div>
+        <div class="dest-tag">Thaïlande ✦ Plages sauvages</div>
+      </div>
+      <div class="dest-price">À partir de 1 690 €</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="exp-grid">
+    <div class="exp-visual">
+      <img src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=600&q=80" alt="Experience" class="exp-img-main">
+      <img src="https://images.unsplash.com/photo-1540202404-1b927e27fa8b?w=400&q=80" alt="Detail" class="exp-img-accent">
+      <div class="exp-badge">
+        <span class="exp-badge-num">12</span>
+        <span class="exp-badge-text">Ans d'expertise</span>
+      </div>
+    </div>
+    <div class="exp-content">
+      <p class="section-tag">✦ Notre philosophie</p>
+      <h2 class="section-title">Chaque voyage,<br>une <em>expérience unique</em></h2>
+      <p class="section-desc">Nous ne vendons pas des voyages, nous créons des souvenirs. Chaque itinéraire est conçu sur mesure, selon vos envies et vos rêves les plus profonds.</p>
+      <div class="exp-features">
+        <div class="exp-feature">
+          <div class="exp-feature-icon">🌊</div>
+          <div>
+            <div class="exp-feature-title">Sélection premium</div>
+            <div class="exp-feature-desc">Nos experts sélectionnent uniquement les hôtels et resorts les plus exclusifs, directement sur l'eau turquoise.</div>
+          </div>
+        </div>
+        <div class="exp-feature">
+          <div class="exp-feature-icon">✈️</div>
+          <div>
+            <div class="exp-feature-title">Tout inclus & sur mesure</div>
+            <div class="exp-feature-desc">Vols, transferts, hébergement, activités — tout est organisé pour vous. Vous n'avez qu'à profiter.</div>
+          </div>
+        </div>
+        <div class="exp-feature">
+          <div class="exp-feature-icon">🏝️</div>
+          <div>
+            <div class="exp-feature-title">Accompagnement 24h/24</div>
+            <div class="exp-feature-desc">Un conseiller dédié vous accompagne avant, pendant et après votre voyage pour une tranquillité totale.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ILES -->
+<section class="islands" id="iles">
+  <div class="islands-intro">
+    <p class="section-tag">✦ Îles paradisiaques</p>
+    <h2 class="section-title">Eaux turquoise,<br>sable <em>immaculé</em></h2>
+    <p class="section-desc">Des destinations où l'eau est si claire qu'on y voit les fonds marins. Des plages de sable blanc fin à perte de vue.</p>
+  </div>
+  <div class="islands-strip">
+    <div class="island-card">
+      <img src="https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?w=400&q=80" alt="Fidji" class="island-img">
+      <div class="island-body">
+        <div class="island-flag">🇫🇯</div>
+        <div class="island-name">Îles Fidji</div>
+        <div class="island-desc">333 îles aux lagons cristallins et aux récifs coralliens parmi les plus beaux du monde. Un paradis authentique.</div>
+        <div class="island-footer">
+          <div class="island-price">1 990 € <span>/ pers.</span></div>
+          <button class="island-btn">Découvrir</button>
+        </div>
+      </div>
+    </div>
+    <div class="island-card">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80" alt="Moorea" class="island-img">
+      <div class="island-body">
+        <div class="island-flag">🇵🇫</div>
+        <div class="island-name">Moorea</div>
+        <div class="island-desc">Le joyau de la Polynésie française. Une montagne volcanique entourée d'un lagon bleu turquoise à couper le souffle.</div>
+        <div class="island-footer">
+          <div class="island-price">2 750 € <span>/ pers.</span></div>
+          <button class="island-btn">Découvrir</button>
+        </div>
+      </div>
+    </div>
+    <div class="island-card">
+      <img src="https://images.unsplash.com/photo-1602002418082-dd4a3f5b4c4d?w=400&q=80" alt="Zanzibar" class="island-img">
+      <div class="island-body">
+        <div class="island-flag">🇹🇿</div>
+        <div class="island-name">Zanzibar</div>
+        <div class="island-desc">L'île aux épices. Des plages de sable blanc bordées de cocotiers, une eau turquoise chaude et une culture envoûtante.</div>
+        <div class="island-footer">
+          <div class="island-price">1 490 € <span>/ pers.</span></div>
+          <button class="island-btn">Découvrir</button>
+        </div>
+      </div>
+    </div>
+    <div class="island-card">
+      <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=400&q=80" alt="Palawan" class="island-img">
+      <div class="island-body">
+        <div class="island-flag">🇵🇭</div>
+        <div class="island-name">Palawan</div>
+        <div class="island-desc">Élue plus belle île du monde. Des lagons secrets, des falaises calcaires et une eau d'un bleu turquoise irréel.</div>
+        <div class="island-footer">
+          <div class="island-price">1 790 € <span>/ pers.</span></div>
+          <button class="island-btn">Découvrir</button>
+        </div>
+      </div>
+    </div>
+    <div class="island-card">
+      <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=400&q=80" alt="Maldives" class="island-img">
+      <div class="island-body">
+        <div class="island-flag">🇲🇻</div>
+        <div class="island-name">Maldives</div>
+        <div class="island-desc">Le rêve ultime. Des villas sur pilotis au-dessus d'un lagon transparent, pour un séjour hors du temps.</div>
+        <div class="island-footer">
+          <div class="island-price">2 890 € <span>/ pers.</span></div>
+          <button class="island-btn">Découvrir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="temoignages">
+  <div class="test-intro">
+    <p class="section-tag">✦ Ils ont trouvé leur paradis</p>
+    <h2 class="section-title">Ce que disent<br>nos <em>voyageurs</em></h2>
+    <p class="section-desc">Des milliers de voyageurs nous ont fait confiance. Voici ce qu'ils en pensent.</p>
+  </div>
+  <div class="test-grid">
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"Une semaine aux Maldives organisée à la perfection. L'eau était exactement comme sur les photos — turquoise, transparente, magique. On recommande les yeux fermés."</p>
+      <div class="test-author">
+        <img src="https://i.pravatar.cc/42?img=1" alt="Sophie" class="test-avatar">
+        <div>
+          <div class="test-name">Sophie M.</div>
+          <div class="test-dest">Maldives, 2025</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"Bora Bora était un rêve d'enfance. Grâce à Paradis Voyages, ce rêve est devenu réalité. Tout était parfait, du vol jusqu'au retour. Merci infiniment !"</p>
+      <div class="test-author">
+        <img src="https://i.pravatar.cc/42?img=5" alt="Thomas" class="test-avatar">
+        <div>
+          <div class="test-name">Thomas & Julie</div>
+          <div class="test-dest">Bora Bora, 2025</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"Zanzibar dépassait toutes nos attentes. Le sable blanc, l'eau turquoise, la culture locale — un mélange unique. Notre conseiller a tout organisé avec soin."</p>
+      <div class="test-author">
+        <img src="https://i.pravatar.cc/42?img=9" alt="Amina" class="test-avatar">
+        <div>
+          <div class="test-name">Amina K.</div>
+          <div class="test-dest">Zanzibar, 2024</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-content">
+    <p class="section-tag">✦ Votre rêve commence ici</p>
+    <h2 class="section-title">Prêt à trouver<br>votre <em>coin de paradis</em> ?</h2>
+    <p class="section-desc">Laissez-nous votre email et un conseiller vous contacte sous 24h pour créer votre voyage de rêve sur mesure.</p>
+    <div class="cta-form">
+      <input type="email" class="cta-input" placeholder="Votre adresse email...">
+      <button class="cta-submit">Je veux mon paradis</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Paradis<span>Voyages</span></div>
+      <p class="footer-about">Nous créons des voyages sur mesure vers les plus belles îles du monde. Des eaux turquoise, du sable blanc, des souvenirs inoubliables.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a href="#">Maldives</a></li>
+        <li><a href="#">Bora Bora</a></li>
+        <li><a href="#">Seychelles</a></li>
+        <li><a href="#">Zanzibar</a></li>
+        <li><a href="#">Fidji</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Voyage sur mesure</a></li>
+        <li><a href="#">Lune de miel</a></li>
+        <li><a href="#">Voyage en famille</a></li>
+        <li><a href="#">Séjours luxe</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">contact@paradis-voyages.fr</a></li>
+        <li><a href="#">+33 1 23 45 67 89</a></li>
+        <li><a href="#">Paris, France</a></li>
+        <li><a href="#">Lun–Ven 9h–19h</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 ParadisVoyages — Tous droits réservés</span>
+    <span>Mentions légales · Confidentialité · CGV</span>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 80);
+  });
+</script>
+</body>
+</html>
